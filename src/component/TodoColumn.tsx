@@ -1,5 +1,5 @@
-import TodoColumnButton from "./TodoColumnButton";
 import type { ITodo } from "../App";
+import Button from "./Button";
 
 interface IFruitTodoListProps {
   data: ITodo[];
@@ -11,9 +11,10 @@ const TodoColumn = ({ data, onClick }: IFruitTodoListProps) =>
     const { type, name } = todo;
 
     return (
-      <TodoColumnButton
+      <Button
         key={`${type}-${name}`}
         todo={todo}
+        timeout={5000}
         onClick={onClick}
       />)
   })

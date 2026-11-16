@@ -4,18 +4,23 @@ import type { ITodo } from "../App";
 interface ITodoColumnButtonProps {
   todo: ITodo;
   onClick: (todo: ITodo) => void;
+  timeout?: number;
 }
 
-const TodoColumnButton = ({ todo, onClick }: ITodoColumnButtonProps) => {
+const Button = ({ todo, onClick, timeout }: ITodoColumnButtonProps) => {
   const { name } = todo;
 
   useEffect(() => {
-    const timer = setTimeout(() => { onClick(todo) }, 5000);
+    if (timeout === undefined) {
+      return
+    }
+
+    const timer = setTimeout(() => { onClick(todo) }, timeout);
 
     return () => {
       clearTimeout(timer);
     }
-  }, [onClick, todo]);
+  }, [onClick, todo, timeout]);
 
   return (
     <button style={{ width: "100%", backgroundColor: "red" }} onClick={() => onClick(todo)} >
@@ -24,4 +29,4 @@ const TodoColumnButton = ({ todo, onClick }: ITodoColumnButtonProps) => {
   )
 }
 
-export default TodoColumnButton
+export default Button
