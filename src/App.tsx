@@ -57,7 +57,7 @@ const INITIAL_DATA_STATE: TTodoState = {
 const App = () => {
   const [data, setData] = useState<TTodoState>(INITIAL_DATA_STATE)
 
-  const handleClickMainTodo = (todo: ITodo) => {
+  const handleClickMainTodo = useCallback((todo: ITodo) => {
     // TODO: valid with type too, prevent same name but diff type
     const { type, name } = todo;
 
@@ -70,7 +70,7 @@ const App = () => {
         [type]: [...prev[type], todo]
       })
     })
-  }
+  }, [])
 
   const handleTodoBackToMain = useCallback((todo: ITodo) => {
     const { type, name } = todo;
