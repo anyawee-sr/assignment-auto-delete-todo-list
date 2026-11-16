@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import type { ITodo } from "../App";
 import styles from "./Button.module.css";
 
@@ -8,24 +7,14 @@ interface IButtonProps {
   timeout?: number;
 }
 
-const Button = ({ todo, onClick, timeout }: IButtonProps) => {
-  const { name } = todo;
-
-  useEffect(() => {
-    if (timeout === undefined) {
-      return
-    }
-
-    const timer = setTimeout(() => { onClick(todo) }, timeout);
-
-    return () => {
-      clearTimeout(timer);
-    }
-  }, [onClick, todo, timeout]);
+const Button = ({ todo, onClick }: IButtonProps) => {
+  const handleClickButton = () => {
+    onClick(todo)
+  }
 
   return (
-    <button className={styles.textButton} onClick={() => onClick(todo)} >
-      {name}
+    <button className={styles.textButton} onClick={handleClickButton} >
+      {todo.name}
     </button>
   )
 }

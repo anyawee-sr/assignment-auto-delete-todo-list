@@ -1,18 +1,15 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
 import MainTodoColumn from './component/MainTodoColumn';
 import styles from './App.module.css';
 
-type TType = 'Fruit' | 'Vegetable'
-
 export interface ITodo {
-  type: TType;
+  type: string;
   name: string;
 }
 
-type TTodoState = { main: ITodo[] } & Record<TType, ITodo[]>
+type TTodoState = Record<string, ITodo[]>
 
-const TODO_TYPE: TType[] = ['Fruit', 'Vegetable']
 const MOCKING_DATA: ITodo[] = [
   {
     type: 'Fruit',
@@ -50,52 +47,76 @@ const MOCKING_DATA: ITodo[] = [
 
 const INITIAL_DATA_STATE: TTodoState = {
   main: MOCKING_DATA,
-  Fruit: [],
-  Vegetable: [],
 }
 
 const App = () => {
   const [data, setData] = useState<TTodoState>(INITIAL_DATA_STATE)
 
-  const handleClickMainTodo = useCallback((todo: ITodo) => {
-    // TODO: valid with type too, prevent same name but diff type
-    const { type, name } = todo;
+  const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>())
+  const getKey = ({ type, name }: ITodo) => `${type}-${name}`
 
-    setData((prev) => {
-      const newTodoList = prev.main.filter((item) => item.name !== name)
+  const moveToMain = useCallback((todo: ITodo) => {
+    const key = getKey(todo)
 
-      return ({
-        ...prev,
-        main: newTodoList,
-        [type]: [...prev[type], todo]
-      })
-    })
-  }, [])
+    clearTimeout(timersRef.current.get(key))
+    timersRef.current.delete(key)
 
-  const handleTodoBackToMain = useCallback((todo: ITodo) => {
-    const { type, name } = todo;
+    const { type } = todo;
 
-    setData((prev) => {
-      return ({
+    setData((prev) => (
+      {
         ...prev,
         main: [...prev.main, todo],
-        [type]: prev[type].filter((item) => item.name !== name)
+        [type]: prev[type].filter((item) => getKey(item) !== key)
+      }
+    ))
+  }, [])
+
+  const handleClickMainTodo = useCallback((todo: ITodo) => {
+    const key = getKey(todo)
+
+    const { type } = todo;
+
+    setData((prev) => (
+      {
+        ...prev,
+        main: prev.main.filter((item) => getKey(item) !== key),
+        [type]: [...(prev[type] || []), todo]
       })
-    })
+    )
+
+    timersRef.current.set(key, setTimeout(() => moveToMain(todo), 5000))
+  }, [moveToMain])
+
+
+
+  useEffect(() => {
+    const timers = timersRef.current;
+
+    return () => timers.forEach((timer) => clearTimeout(timer))
   }, [])
 
   return (
-    <div className={styles.container} style={{ "--columns": TODO_TYPE.length + 1 } as React.CSSProperties}>
-      {<MainTodoColumn data={data.main} onClick={handleClickMainTodo} />}
+    /**
+     * TODO: how to dynamically set the number of columns?
+     * now: hardcode to 3, no column header when empty checked
+     */
+    <div className={styles.container} style={{ "--columns": 3 } as React.CSSProperties}>
+      {Object.entries(data).map(([type, todos]) => {
+        if (type === 'main') {
+          return <MainTodoColumn key={type} data={data.main} onClick={handleClickMainTodo} />;
+        }
 
-      {TODO_TYPE.map((type => (
-        <div key={type} className={styles.column}>
-          <div className={styles.columnHeader}>
-            <h3>{type}</h3>
+        return (
+          <div key={type} className={styles.column}>
+            <div className={styles.columnHeader}>
+              <h3>{type}</h3>
+            </div>
+
+            <TodoColumn data={todos} onClick={moveToMain} />
           </div>
-          <TodoColumn data={data?.[type]} onClick={handleTodoBackToMain} />
-        </div>
-      )))}
+        )
+      })}
     </div>
   )
 }
