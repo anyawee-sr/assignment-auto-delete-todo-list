@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
 import MainTodoColumn from './component/MainTodoColumn';
-import './App.css'
+import styles from './App.module.css';
 
 type TType = 'Fruit' | 'Vegetable'
 
@@ -85,12 +85,14 @@ const App = () => {
   }, [])
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: `repeat(${TODO_TYPE.length + 1}, 1fr)` }}>
+    <div className={styles.container} style={{ "--columns": TODO_TYPE.length + 1 } as React.CSSProperties}>
       {<MainTodoColumn data={data.main} onClick={handleClickMainTodo} />}
 
       {TODO_TYPE.map((type => (
-        <div key={type}>
-          <h3>{type}</h3>
+        <div key={type} className={styles.column}>
+          <div className={styles.columnHeader}>
+            <h3>{type}</h3>
+          </div>
           <TodoColumn data={data?.[type]} onClick={handleTodoBackToMain} />
         </div>
       )))}

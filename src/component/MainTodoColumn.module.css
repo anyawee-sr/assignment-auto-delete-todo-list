@@ -1,0 +1,4 @@
+.MainList {
+  display: flex;
+  flex-direction: column;
+}

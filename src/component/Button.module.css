@@ -1,0 +1,14 @@
+.textButton {
+  background-color: #fefefe;
+  border: 2px solid #eeeeee;
+  border-radius: 2px;
+  padding: 8px;
+  margin: 4px 8px;
+  color: #000000;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f6f8fa;
+  }
+}

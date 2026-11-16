@@ -1,5 +1,6 @@
 import Button from "./Button";
 import type { ITodo } from "../App";
+import styles from "./MainTodoColumn.module.css";
 
 interface IMainTodoColumnProps {
   data: ITodo[];
@@ -7,7 +8,7 @@ interface IMainTodoColumnProps {
 }
 
 const MainTodoColumn = ({ data, onClick }: IMainTodoColumnProps) =>
-  <div>
+  <div className={styles.MainList}>
     {data.map((todo) => {
       const { type, name } = todo;
 

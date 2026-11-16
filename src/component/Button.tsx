@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { ITodo } from "../App";
+import styles from "./Button.module.css";
 
 interface ITodoColumnButtonProps {
   todo: ITodo;
@@ -23,8 +24,8 @@ const Button = ({ todo, onClick, timeout }: ITodoColumnButtonProps) => {
   }, [onClick, todo, timeout]);
 
   return (
-    <button style={{ width: "100%", backgroundColor: "red" }} onClick={() => onClick(todo)} >
-      <h3>{name}</h3>
+    <button className={styles.textButton} onClick={() => onClick(todo)} >
+      {name}
     </button>
   )
 }
