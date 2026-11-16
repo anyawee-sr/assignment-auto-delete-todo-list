@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import type { ITodo } from "../App";
 import styles from "./Button.module.css";
 
-interface ITodoColumnButtonProps {
+interface IButtonProps {
   todo: ITodo;
   onClick: (todo: ITodo) => void;
   timeout?: number;
 }
 
-const Button = ({ todo, onClick, timeout }: ITodoColumnButtonProps) => {
+const Button = ({ todo, onClick, timeout }: IButtonProps) => {
   const { name } = todo;
 
   useEffect(() => {

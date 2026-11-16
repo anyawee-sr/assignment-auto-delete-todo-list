@@ -1,12 +1,12 @@
 import type { ITodo } from "../App";
 import Button from "./Button";
 
-interface IFruitTodoListProps {
+interface ITodoColumnProps {
   data: ITodo[];
   onClick: (todo: ITodo) => void;
 }
 
-const TodoColumn = ({ data, onClick }: IFruitTodoListProps) =>
+const TodoColumn = ({ data, onClick }: ITodoColumnProps) =>
   data.map((todo) => {
     const { type, name } = todo;
 
