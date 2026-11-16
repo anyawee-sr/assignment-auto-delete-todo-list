@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
+import MainTodoColumn from './component/MainTodoColumn';
 import './App.css'
 
 type TType = 'Fruit' | 'Vegetable'
@@ -85,17 +86,7 @@ const App = () => {
 
   return (
     <div style={{ display: "grid", gridTemplateColumns: `repeat(${TODO_TYPE.length + 1}, 1fr)` }}>
-      <div>
-        {data.main.map((todo) => {
-          const { type, name } = todo;
-
-          return (
-            <button key={`${type}-${name}`} style={{ width: "100%" }} onClick={() => handleClickMainTodo(todo)}>
-              <h3>{name}</h3>
-            </button>
-          )
-        })}
-      </div>
+      {<MainTodoColumn data={data.main} onClick={handleClickMainTodo} />}
 
       {TODO_TYPE.map((type => (
         <div key={type}>
