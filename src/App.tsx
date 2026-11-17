@@ -99,11 +99,7 @@ const App = () => {
   }, [])
 
   return (
-    /**
-    * TODO: how to dynamically set the number of columns?
-    * now: hardcode to 3, no column header when empty checked
-    */
-    <div className={styles.container} style={{ "--columns": 3 } as React.CSSProperties}>
+    <div className={styles.container} style={{ "--columns": TYPES.length + 1 } as React.CSSProperties}>
       <MainTodoColumn data={data.main} onClick={handleClickMainTodo} />
 
       {TYPES.map((type) => (
