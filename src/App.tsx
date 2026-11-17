@@ -8,7 +8,7 @@ export interface ITodo {
   name: string;
 }
 
-type TTodoState = Record<string, ITodo[]>
+type TTodoState = { main: ITodo[] } & Partial<Record<string, ITodo[]>>
 
 const MOCKING_DATA: ITodo[] = [
   {
@@ -45,6 +45,8 @@ const MOCKING_DATA: ITodo[] = [
   },
 ]
 
+const TYPES = [...new Set(MOCKING_DATA.map(({ type }) => type))]
+
 const INITIAL_DATA_STATE: TTodoState = {
   main: MOCKING_DATA,
 }
@@ -67,7 +69,7 @@ const App = () => {
       {
         ...prev,
         main: [...prev.main, todo],
-        [type]: prev[type].filter((item) => getKey(item) !== key)
+        [type]: (prev[type] ?? []).filter((item) => getKey(item) !== key)
       }
     ))
   }, [])
@@ -81,7 +83,7 @@ const App = () => {
       {
         ...prev,
         main: prev.main.filter((item) => getKey(item) !== key),
-        [type]: [...(prev[type] || []), todo]
+        [type]: [...(prev[type] ?? []), todo]
       })
     )
 
@@ -98,25 +100,21 @@ const App = () => {
 
   return (
     /**
-     * TODO: how to dynamically set the number of columns?
-     * now: hardcode to 3, no column header when empty checked
-     */
+    * TODO: how to dynamically set the number of columns?
+    * now: hardcode to 3, no column header when empty checked
+    */
     <div className={styles.container} style={{ "--columns": 3 } as React.CSSProperties}>
-      {Object.entries(data).map(([type, todos]) => {
-        if (type === 'main') {
-          return <MainTodoColumn key={type} data={data.main} onClick={handleClickMainTodo} />;
-        }
+      <MainTodoColumn data={data.main} onClick={handleClickMainTodo} />
 
-        return (
-          <div key={type} className={styles.column}>
-            <div className={styles.columnHeader}>
-              <h3>{type}</h3>
-            </div>
-
-            <TodoColumn data={todos} onClick={moveToMain} />
+      {TYPES.map((type) => (
+        <div key={type} className={styles.column}>
+          <div className={styles.columnHeader}>
+            <h3>{type}</h3>
           </div>
-        )
-      })}
+
+          <TodoColumn data={data[type] ?? []} onClick={moveToMain} />
+        </div>
+      ))}
     </div>
   )
 }
