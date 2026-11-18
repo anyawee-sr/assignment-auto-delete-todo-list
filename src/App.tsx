@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
-import MainTodoColumn from './component/MainTodoColumn';
 import styles from './App.module.css';
 
 export interface ITodo {
@@ -100,16 +99,15 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      <MainTodoColumn data={data.main} onClick={handleClickMainTodo} />
+      <TodoColumn data={data.main} onClick={handleClickMainTodo} />
 
       {TYPES.map((type) => (
-        <div key={type} className={styles.column}>
-          <div className={styles.columnHeader}>
-            <h3>{type}</h3>
-          </div>
-
-          <TodoColumn data={data[type] ?? []} onClick={moveToMain} />
-        </div>
+        <TodoColumn
+          key={type}
+          title={type}
+          data={data[type] ?? []}
+          onClick={moveToMain}
+        />
       ))}
     </div>
   )
