@@ -1,5 +1,5 @@
 import type { ITodoItem } from "../types/todo";
-import Button from "./Button";
+import TodoItemButton from "./TodoItemButton";
 import styles from "./TodoColumn.module.css";
 
 interface ITodoColumnProps {
@@ -22,10 +22,9 @@ const TodoColumn = ({ data, onClick, title }: ITodoColumnProps) =>
 
       return (
 
-        <Button
+        <TodoItemButton
           key={`${type}-${name}`}
           todo={todo}
-          timeout={5000}
           onClick={onClick}
         />
       )

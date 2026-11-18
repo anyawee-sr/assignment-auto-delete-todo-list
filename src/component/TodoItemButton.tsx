@@ -1,13 +1,12 @@
 import type { ITodoItem } from "../types/todo";
-import styles from "./Button.module.css";
+import styles from "./TodoItemButton.module.css";
 
-interface IButtonProps {
+interface ITodoItemButtonProps {
   todo: ITodoItem;
   onClick: (todo: ITodoItem) => void;
-  timeout?: number;
 }
 
-const Button = ({ todo, onClick }: IButtonProps) => {
+const TodoItemButton = ({ todo, onClick }: ITodoItemButtonProps) => {
   const handleClickButton = () => {
     onClick(todo)
   }
@@ -19,4 +18,4 @@ const Button = ({ todo, onClick }: IButtonProps) => {
   )
 }
 
-export default Button
+export default TodoItemButton
