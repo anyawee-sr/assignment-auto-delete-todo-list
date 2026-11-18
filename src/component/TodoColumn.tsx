@@ -1,4 +1,4 @@
-import type { ITodo } from "../App";
+import type { ITodo } from "../types/todo";
 import Button from "./Button";
 import styles from "./TodoColumn.module.css";
 

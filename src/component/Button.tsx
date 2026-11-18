@@ -1,4 +1,4 @@
-import type { ITodo } from "../App";
+import type { ITodo } from "../types/todo";
 import styles from "./Button.module.css";
 
 interface IButtonProps {

@@ -1,13 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
 import styles from './App.module.css';
-
-export interface ITodo {
-  type: string;
-  name: string;
-}
-
-type TTodoState = { main: ITodo[] } & Partial<Record<string, ITodo[]>>
+import type { ITodo, TTodoState } from './types/todo';
 
 const MOCKING_DATA: ITodo[] = [
   {
