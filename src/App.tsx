@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
 import styles from './App.module.css';
-import type { ITodoItem, TTodoState } from './types/todo';
+import type { ITodoItem, TTodoColumns } from './types/todo';
 import { MOCK_TODO_LIST, TYPES } from './data/mockTodoList';
 
-const INITIAL_DATA_STATE: TTodoState = {
+const INITIAL_TODO_COLUMNS: TTodoColumns = {
   main: MOCK_TODO_LIST,
 }
 
 const App = () => {
-  const [data, setData] = useState<TTodoState>(INITIAL_DATA_STATE)
+  const [todoColumns, setTodoColumns] = useState<TTodoColumns>(INITIAL_TODO_COLUMNS)
 
   const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>())
   const getKey = ({ type, name }: ITodoItem) => `${type}-${name}`
@@ -22,7 +22,7 @@ const App = () => {
 
     const { type } = todo;
 
-    setData((prev) => (
+    setTodoColumns((prev) => (
       {
         ...prev,
         main: [...prev.main, todo],
@@ -36,7 +36,7 @@ const App = () => {
 
     const { type } = todo;
 
-    setData((prev) => (
+    setTodoColumns((prev) => (
       {
         ...prev,
         main: prev.main.filter((item) => getKey(item) !== key),
@@ -57,13 +57,13 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      <TodoColumn todoList={data.main} onClick={handleClickMainTodo} />
+      <TodoColumn todoList={todoColumns.main} onClick={handleClickMainTodo} />
 
       {TYPES.map((type) => (
         <TodoColumn
           key={type}
           title={type}
-          todoList={data[type] ?? []}
+          todoList={todoColumns[type] ?? []}
           onClick={moveToMain}
         />
       ))}

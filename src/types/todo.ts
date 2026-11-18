@@ -3,4 +3,4 @@ export interface ITodoItem {
   name: string;
 }
 
-export type TTodoState = { main: ITodoItem[] } & Partial<Record<string, ITodoItem[]>>
+export type TTodoColumns = { main: ITodoItem[] } & Partial<Record<string, ITodoItem[]>>
