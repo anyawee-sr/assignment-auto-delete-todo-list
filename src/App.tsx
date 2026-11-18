@@ -99,7 +99,7 @@ const App = () => {
   }, [])
 
   return (
-    <div className={styles.container} style={{ "--columns": TYPES.length + 1 } as React.CSSProperties}>
+    <div className={styles.container}>
       <MainTodoColumn data={data.main} onClick={handleClickMainTodo} />
 
       {TYPES.map((type) => (
