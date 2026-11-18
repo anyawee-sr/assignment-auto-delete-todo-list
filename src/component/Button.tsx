@@ -1,9 +1,9 @@
-import type { ITodo } from "../types/todo";
+import type { ITodoItem } from "../types/todo";
 import styles from "./Button.module.css";
 
 interface IButtonProps {
-  todo: ITodo;
-  onClick: (todo: ITodo) => void;
+  todo: ITodoItem;
+  onClick: (todo: ITodoItem) => void;
   timeout?: number;
 }
 

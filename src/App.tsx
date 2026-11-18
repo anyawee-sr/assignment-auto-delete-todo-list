@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
 import styles from './App.module.css';
-import type { ITodo, TTodoState } from './types/todo';
+import type { ITodoItem, TTodoState } from './types/todo';
 
-const MOCKING_DATA: ITodo[] = [
+const MOCKING_DATA: ITodoItem[] = [
   {
     type: 'Fruit',
     name: 'Apple',
@@ -48,9 +48,9 @@ const App = () => {
   const [data, setData] = useState<TTodoState>(INITIAL_DATA_STATE)
 
   const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>())
-  const getKey = ({ type, name }: ITodo) => `${type}-${name}`
+  const getKey = ({ type, name }: ITodoItem) => `${type}-${name}`
 
-  const moveToMain = useCallback((todo: ITodo) => {
+  const moveToMain = useCallback((todo: ITodoItem) => {
     const key = getKey(todo)
 
     clearTimeout(timersRef.current.get(key))
@@ -67,7 +67,7 @@ const App = () => {
     ))
   }, [])
 
-  const handleClickMainTodo = useCallback((todo: ITodo) => {
+  const handleClickMainTodo = useCallback((todo: ITodoItem) => {
     const key = getKey(todo)
 
     const { type } = todo;

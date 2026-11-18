@@ -1,10 +1,10 @@
-import type { ITodo } from "../types/todo";
+import type { ITodoItem } from "../types/todo";
 import Button from "./Button";
 import styles from "./TodoColumn.module.css";
 
 interface ITodoColumnProps {
-  data: ITodo[];
-  onClick: (todo: ITodo) => void;
+  data: ITodoItem[];
+  onClick: (todo: ITodoItem) => void;
   title?: string;
 }
 
