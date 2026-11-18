@@ -2,10 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
 import styles from './App.module.css';
 import type { ITodoItem, TTodoState } from './types/todo';
-import { MOCKING_DATA, TYPES } from './data/todo';
+import { MOCK_TODO_LIST, TYPES } from './data/todo';
 
 const INITIAL_DATA_STATE: TTodoState = {
-  main: MOCKING_DATA,
+  main: MOCK_TODO_LIST,
 }
 
 const App = () => {
