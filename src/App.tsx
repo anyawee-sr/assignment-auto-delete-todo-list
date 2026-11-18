@@ -57,13 +57,13 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      <TodoColumn data={data.main} onClick={handleClickMainTodo} />
+      <TodoColumn todoList={data.main} onClick={handleClickMainTodo} />
 
       {TYPES.map((type) => (
         <TodoColumn
           key={type}
           title={type}
-          data={data[type] ?? []}
+          todoList={data[type] ?? []}
           onClick={moveToMain}
         />
       ))}

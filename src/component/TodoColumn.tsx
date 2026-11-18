@@ -3,12 +3,12 @@ import TodoItemButton from "./TodoItemButton";
 import styles from "./TodoColumn.module.css";
 
 interface ITodoColumnProps {
-  data: ITodoItem[];
+  todoList: ITodoItem[];
   onClick: (todo: ITodoItem) => void;
   title?: string;
 }
 
-const TodoColumn = ({ data, onClick, title }: ITodoColumnProps) =>
+const TodoColumn = ({ todoList, onClick, title }: ITodoColumnProps) =>
 
   <div className={title ? styles.column : styles.list}>
     {title && (
@@ -17,14 +17,14 @@ const TodoColumn = ({ data, onClick, title }: ITodoColumnProps) =>
       </div>
     )}
 
-    {data.map((todo) => {
-      const { type, name } = todo;
+    {todoList.map((todoItem) => {
+      const { type, name } = todoItem;
 
       return (
 
         <TodoItemButton
           key={`${type}-${name}`}
-          todo={todo}
+          todo={todoItem}
           onClick={onClick}
         />
       )
