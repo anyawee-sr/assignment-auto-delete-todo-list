@@ -2,43 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import TodoColumn from './component/TodoColumn';
 import styles from './App.module.css';
 import type { ITodoItem, TTodoState } from './types/todo';
-
-const MOCKING_DATA: ITodoItem[] = [
-  {
-    type: 'Fruit',
-    name: 'Apple',
-  },
-  {
-    type: 'Vegetable',
-    name: 'Broccoli',
-  },
-  {
-    type: 'Vegetable',
-    name: 'Mushroom',
-  },
-  {
-    type: 'Fruit',
-    name: 'Banana',
-  },
-  {
-    type: 'Vegetable',
-    name: 'Tomato',
-  },
-  {
-    type: 'Vegetable',
-    name: 'Cucumber',
-  },
-  {
-    type: 'Fruit',
-    name: 'Watermelon',
-  },
-  {
-    type: 'Vegetable',
-    name: 'Carrot',
-  },
-]
-
-const TYPES = [...new Set(MOCKING_DATA.map(({ type }) => type))]
+import { MOCKING_DATA, TYPES } from './data/todo';
 
 const INITIAL_DATA_STATE: TTodoState = {
   main: MOCKING_DATA,
