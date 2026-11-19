@@ -3,12 +3,12 @@ import TodoColumn from './component/TodoColumn';
 import styles from './App.module.css';
 import type { ITodoItem, TTodoColumns } from './types/todo';
 import { TRANSFORMED_TODO_LIST, TYPES } from './data/mockTodoList';
+import { EMPTY_TODO_LIST, moveTodoToMainColumn, moveTodoToTypeColumn } from './util/todoColumns';
 
 const INITIAL_TODO_COLUMNS: TTodoColumns = {
   main: TRANSFORMED_TODO_LIST,
 }
 
-const EMPTY_TODO_LIST: ITodoItem[] = []
 const AUTO_MOVE_DELAY_MS = 5000
 
 const App = () => {
@@ -17,32 +17,18 @@ const App = () => {
   const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>())
 
   const moveToMain = useCallback((todo: ITodoItem) => {
-    const { id, type } = todo;
+    const { id } = todo;
 
     clearTimeout(timersRef.current.get(id))
     timersRef.current.delete(id)
 
-    setTodoColumns((prev) => (
-      {
-        ...prev,
-        main: [...prev.main, todo],
-        [type]: (prev[type] ?? EMPTY_TODO_LIST).filter((item) => item.id !== id)
-      }
-    ))
+    setTodoColumns((prev) => moveTodoToMainColumn(prev, todo))
   }, [])
 
   const handleClickMainTodo = useCallback((todo: ITodoItem) => {
-    const { id, type } = todo;
+    setTodoColumns((prev) => moveTodoToTypeColumn(prev, todo))
 
-    setTodoColumns((prev) => (
-      {
-        ...prev,
-        main: prev.main.filter((item) => item.id !== id),
-        [type]: [...(prev[type] ?? EMPTY_TODO_LIST), todo]
-      })
-    )
-
-    timersRef.current.set(id, setTimeout(() => moveToMain(todo), AUTO_MOVE_DELAY_MS))
+    timersRef.current.set(todo.id, setTimeout(() => moveToMain(todo), AUTO_MOVE_DELAY_MS))
   }, [moveToMain])
 
 
