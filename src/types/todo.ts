@@ -1,4 +1,5 @@
 export interface ITodoItem {
+  id: string;
   type: string;
   name: string;
 }

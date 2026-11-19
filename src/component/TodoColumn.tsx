@@ -17,18 +17,13 @@ const TodoColumn = ({ todoList, onClick, title }: ITodoColumnProps) =>
       </div>
     )}
 
-    {todoList.map((todoItem) => {
-      const { type, name } = todoItem;
-
-      return (
-
-        <TodoItemButton
-          key={`${type}-${name}`}
-          todo={todoItem}
-          onClick={onClick}
-        />
-      )
-    })}
+    {todoList.map((todoItem) => (
+      <TodoItemButton
+        key={todoItem.id}
+        todo={todoItem}
+        onClick={onClick}
+      />
+    ))}
   </div>
 
 

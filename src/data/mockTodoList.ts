@@ -1,6 +1,6 @@
 import type { ITodoItem } from '../types/todo';
 
-export const MOCK_TODO_LIST: ITodoItem[] = [
+const RAW_TODO_LIST: Omit<ITodoItem, 'id'>[] = [
   {
     type: 'Fruit',
     name: 'Apple',
@@ -35,4 +35,9 @@ export const MOCK_TODO_LIST: ITodoItem[] = [
   },
 ]
 
-export const TYPES = [...new Set(MOCK_TODO_LIST.map(({ type }) => type))]
+export const TRANSFORMED_TODO_LIST: ITodoItem[] = RAW_TODO_LIST.map((todo) => ({
+  ...todo,
+  id: `${todo.type}-${todo.name}`
+}))
+
+export const TYPES = [...new Set(RAW_TODO_LIST.map(({ type }) => type))]
