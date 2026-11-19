@@ -41,7 +41,7 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      <TodoColumn todoList={todoColumns.main} onClick={handleClickMainTodo} />
+      <TodoColumn ariaLabel="Main list" todoList={todoColumns.main} onClick={handleClickMainTodo} />
 
       {TYPES.map((type) => (
         <TodoColumn
