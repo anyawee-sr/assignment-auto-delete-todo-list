@@ -9,6 +9,7 @@ const INITIAL_TODO_COLUMNS: TTodoColumns = {
 }
 
 const EMPTY_TODO_LIST: ITodoItem[] = []
+const AUTO_MOVE_DELAY_MS = 5000
 
 const App = () => {
   const [todoColumns, setTodoColumns] = useState<TTodoColumns>(INITIAL_TODO_COLUMNS)
@@ -41,7 +42,7 @@ const App = () => {
       })
     )
 
-    timersRef.current.set(id, setTimeout(() => moveToMain(todo), 5000))
+    timersRef.current.set(id, setTimeout(() => moveToMain(todo), AUTO_MOVE_DELAY_MS))
   }, [moveToMain])
 
 
