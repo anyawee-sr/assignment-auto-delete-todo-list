@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import TodoColumn from './component/TodoColumn';
+import TodoColumn from './components/TodoColumn';
 import styles from './App.module.css';
 import type { ITodoItem, TTodoColumns } from './types/todo';
 import { TRANSFORMED_TODO_LIST, TYPES } from './data/mockTodoList';
-import { EMPTY_TODO_LIST, moveTodoToMainColumn, moveTodoToTypeColumn } from './util/todoColumns';
+import { EMPTY_TODO_LIST, moveTodoToMainColumn, moveTodoToTypeColumn } from './utils/todoColumns';
 
 const INITIAL_TODO_COLUMNS: TTodoColumns = {
   main: TRANSFORMED_TODO_LIST,
