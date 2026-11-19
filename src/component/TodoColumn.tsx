@@ -1,6 +1,7 @@
 import type { ITodoItem } from "../types/todo";
 import TodoItemButton from "./TodoItemButton";
 import styles from "./TodoColumn.module.css";
+import { memo } from "react";
 
 interface ITodoColumnProps {
   todoList: ITodoItem[];
@@ -8,8 +9,7 @@ interface ITodoColumnProps {
   title?: string;
 }
 
-const TodoColumn = ({ todoList, onClick, title }: ITodoColumnProps) =>
-
+const TodoColumn = memo(({ todoList, onClick, title }: ITodoColumnProps) =>
   <div className={title ? styles.column : styles.list}>
     {title && (
       <div className={styles.columnHeader}>
@@ -24,7 +24,7 @@ const TodoColumn = ({ todoList, onClick, title }: ITodoColumnProps) =>
         onClick={onClick}
       />
     ))}
-  </div>
+  </div>)
 
 
 

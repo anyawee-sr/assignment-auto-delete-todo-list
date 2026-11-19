@@ -8,6 +8,8 @@ const INITIAL_TODO_COLUMNS: TTodoColumns = {
   main: TRANSFORMED_TODO_LIST,
 }
 
+const EMPTY_TODO_LIST: ITodoItem[] = []
+
 const App = () => {
   const [todoColumns, setTodoColumns] = useState<TTodoColumns>(INITIAL_TODO_COLUMNS)
 
@@ -23,7 +25,7 @@ const App = () => {
       {
         ...prev,
         main: [...prev.main, todo],
-        [type]: (prev[type] ?? []).filter((item) => item.id !== id)
+        [type]: (prev[type] ?? EMPTY_TODO_LIST).filter((item) => item.id !== id)
       }
     ))
   }, [])
@@ -35,7 +37,7 @@ const App = () => {
       {
         ...prev,
         main: prev.main.filter((item) => item.id !== id),
-        [type]: [...(prev[type] ?? []), todo]
+        [type]: [...(prev[type] ?? EMPTY_TODO_LIST), todo]
       })
     )
 
@@ -58,7 +60,7 @@ const App = () => {
         <TodoColumn
           key={type}
           title={type}
-          todoList={todoColumns[type] ?? []}
+          todoList={todoColumns[type] ?? EMPTY_TODO_LIST}
           onClick={moveToMain}
         />
       ))}
