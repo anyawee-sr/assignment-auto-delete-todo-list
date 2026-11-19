@@ -1,9 +1,9 @@
-import type { ITodoItem } from "../types/todo";
-import styles from "./TodoItemButton.module.css";
+import type { ITodoItem } from '../types/todo'
+import styles from './TodoItemButton.module.css'
 
 interface ITodoItemButtonProps {
-  todo: ITodoItem;
-  onClick: (todo: ITodoItem) => void;
+  todo: ITodoItem
+  onClick: (todo: ITodoItem) => void
 }
 
 const TodoItemButton = ({ todo, onClick }: ITodoItemButtonProps) => {
@@ -12,7 +12,7 @@ const TodoItemButton = ({ todo, onClick }: ITodoItemButtonProps) => {
   }
 
   return (
-    <button className={styles.textButton} onClick={handleClickButton} >
+    <button className={styles.textButton} onClick={handleClickButton}>
       {todo.name}
     </button>
   )

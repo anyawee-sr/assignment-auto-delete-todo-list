@@ -3,7 +3,9 @@ import { TRANSFORMED_TODO_LIST, TYPES } from './mockTodoList'
 
 describe('TRANSFORMED_TODO_LIST', () => {
   it('builds each id from its type and name', () => {
-    const mismatched = TRANSFORMED_TODO_LIST.filter(({ id, type, name }) => id !== `${type}-${name}`)
+    const mismatched = TRANSFORMED_TODO_LIST.filter(
+      ({ id, type, name }) => id !== `${type}-${name}`,
+    )
 
     expect(mismatched).toEqual([])
   })
@@ -23,7 +25,9 @@ describe('TYPES', () => {
   })
 
   it('covers the type of every todo', () => {
-    const missing = TRANSFORMED_TODO_LIST.filter(({ type }) => !TYPES.includes(type))
+    const missing = TRANSFORMED_TODO_LIST.filter(
+      ({ type }) => !TYPES.includes(type),
+    )
 
     expect(missing).toEqual([])
   })

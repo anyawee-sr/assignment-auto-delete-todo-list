@@ -1,6 +1,6 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import App from './App';
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import App from './App'
 
 const getButtonNames = (regionName: string) =>
   within(screen.getByRole('region', { name: regionName }))
@@ -8,11 +8,19 @@ const getButtonNames = (regionName: string) =>
     .map((button) => button.textContent)
 
 const clickTodo = (regionName: string, todoItemName: string) =>
-  fireEvent.click(within(screen.getByRole('region', { name: regionName })).getByRole('button', { name: todoItemName }))
+  fireEvent.click(
+    within(screen.getByRole('region', { name: regionName })).getByRole(
+      'button',
+      {
+        name: todoItemName,
+      },
+    ),
+  )
 
-const advanceTime = (ms: number) => act(() => {
-  vi.advanceTimersByTime(ms)
-})
+const advanceTime = (ms: number) =>
+  act(() => {
+    vi.advanceTimersByTime(ms)
+  })
 
 describe('App', () => {
   beforeEach(() => {
@@ -65,7 +73,9 @@ describe('App', () => {
 
     expect(timerCount).toBe(0)
     expect(getButtonNames('Fruit')).toEqual([])
-    expect(getButtonNames('Main list').filter((name) => name === 'Apple')).toEqual(['Apple'])
+    expect(
+      getButtonNames('Main list').filter((name) => name === 'Apple'),
+    ).toEqual(['Apple'])
     expect(getButtonNames('Main list').at(-1)).toBe('Apple')
   })
 
