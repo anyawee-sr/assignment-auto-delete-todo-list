@@ -3,22 +3,22 @@ import TodoList from './components/TodoList'
 import TodoTypeColumn from './components/TodoTypeColumn'
 import styles from './App.module.css'
 import type { ITodoItem, TTodoColumns } from './types/todo'
-import { TRANSFORMED_TODO_LIST, TYPES } from './data/mockTodoList'
+import { RAW_TODO_LIST } from './data/rawTodoList'
 import {
   EMPTY_TODO_LIST,
   moveTodoToMainColumn,
   moveTodoToTypeColumn,
 } from './utils/todoColumns'
-
-const INITIAL_TODO_COLUMNS: TTodoColumns = {
-  main: TRANSFORMED_TODO_LIST,
-}
+import { getTodoTypeList, transformTodoList } from './utils/todoList'
 
 const AUTO_MOVE_DELAY_MS = 5000
 
+const todoTypeList = getTodoTypeList(RAW_TODO_LIST)
+
 const App = () => {
-  const [todoColumns, setTodoColumns] =
-    useState<TTodoColumns>(INITIAL_TODO_COLUMNS)
+  const [todoColumns, setTodoColumns] = useState<TTodoColumns>(() => ({
+    main: transformTodoList(RAW_TODO_LIST),
+  }))
 
   const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>())
 
@@ -55,7 +55,7 @@ const App = () => {
         <TodoList todoList={todoColumns.main} onClick={handleClickMainTodo} />
       </section>
 
-      {TYPES.map((type) => (
+      {todoTypeList.map((type) => (
         <TodoTypeColumn
           key={type}
           title={type}

@@ -1,6 +1,6 @@
-import type { ITodoItem } from '../types/todo'
+import type { TRawTodoItem } from '../types/todo'
 
-const RAW_TODO_LIST: Omit<ITodoItem, 'id'>[] = [
+export const RAW_TODO_LIST: TRawTodoItem[] = [
   {
     type: 'Fruit',
     name: 'Apple',
@@ -46,10 +46,3 @@ const RAW_TODO_LIST: Omit<ITodoItem, 'id'>[] = [
     name: 'Carrot',
   },
 ]
-
-export const TRANSFORMED_TODO_LIST: ITodoItem[] = RAW_TODO_LIST.map((todo) => ({
-  ...todo,
-  id: `${todo.type}-${todo.name}`,
-}))
-
-export const TYPES = [...new Set(RAW_TODO_LIST.map(({ type }) => type))]
