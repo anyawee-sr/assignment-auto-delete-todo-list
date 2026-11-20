@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import TodoColumn from './components/TodoColumn'
+import TodoList from './components/TodoList'
+import TodoTypeColumn from './components/TodoTypeColumn'
 import styles from './App.module.css'
 import type { ITodoItem, TTodoColumns } from './types/todo'
 import { TRANSFORMED_TODO_LIST, TYPES } from './data/mockTodoList'
@@ -50,14 +51,12 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      <TodoColumn
-        ariaLabel="Main list"
-        todoList={todoColumns.main}
-        onClick={handleClickMainTodo}
-      />
+      <section aria-label="Main list">
+        <TodoList todoList={todoColumns.main} onClick={handleClickMainTodo} />
+      </section>
 
       {TYPES.map((type) => (
-        <TodoColumn
+        <TodoTypeColumn
           key={type}
           title={type}
           todoList={todoColumns[type] ?? EMPTY_TODO_LIST}

@@ -1,12 +1,6 @@
-.list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
 .column {
   display: flex;
   flex-direction: column;
-  width: 100%;
   border: 2px solid #eeeeee;
   border-radius: 2px;
 }
