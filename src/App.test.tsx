@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
+import { AUTO_MOVE_DELAY_MS } from './constants/todo'
 
 const getButtonNames = (regionName: string) =>
   within(screen.getByRole('region', { name: regionName }))
@@ -40,11 +41,11 @@ describe('App', () => {
     expect(getButtonNames('Fruit')).toEqual(['Apple'])
   })
 
-  it('moves the todo back to the end of main list after 5 seconds', () => {
+  it('moves the todo back to the end of main list after the auto-move delay', () => {
     render(<App />)
     clickTodo('Main list', 'Apple')
 
-    advanceTime(4999)
+    advanceTime(AUTO_MOVE_DELAY_MS - 1)
     const fruitBeforeDelay = getButtonNames('Fruit')
     advanceTime(1)
 
@@ -69,7 +70,7 @@ describe('App', () => {
 
     clickTodo('Fruit', 'Apple')
     const timerCount = vi.getTimerCount()
-    advanceTime(5000)
+    advanceTime(AUTO_MOVE_DELAY_MS)
 
     expect(timerCount).toBe(0)
     expect(getButtonNames('Fruit')).toEqual([])
@@ -80,16 +81,18 @@ describe('App', () => {
   })
 
   it('runs a separate timer for each todo', () => {
+    const CLICK_GAP = 2000
+
     render(<App />)
     clickTodo('Main list', 'Apple')
-    advanceTime(2000)
+    advanceTime(CLICK_GAP)
     clickTodo('Main list', 'Banana')
 
-    advanceTime(3000)
-    const fruitAtFiveSeconds = getButtonNames('Fruit')
-    advanceTime(2000)
+    advanceTime(AUTO_MOVE_DELAY_MS - CLICK_GAP)
+    const fruitAfterAppleTimer = getButtonNames('Fruit')
+    advanceTime(CLICK_GAP)
 
-    expect(fruitAtFiveSeconds).toEqual(['Banana'])
+    expect(fruitAfterAppleTimer).toEqual(['Banana'])
     expect(getButtonNames('Fruit')).toEqual([])
     expect(getButtonNames('Main list').slice(-2)).toEqual(['Apple', 'Banana'])
   })
