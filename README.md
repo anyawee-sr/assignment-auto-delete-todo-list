@@ -8,7 +8,7 @@ A todo list where clicked items move into a column by type, then return to the m
 
 **https://assignment-auto-delete-todo-list.vercel.app**
 
-https://github.com/user-attachments/assets/2063bc98-2689-49d1-abcf-3d9757fb84b3
+https://github.com/user-attachments/assets/bd786e19-6fa4-485d-8b1f-9e6fd4ed3f5c
 
 ![App screenshot](docs/screenshots/app.png)
 
