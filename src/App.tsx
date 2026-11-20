@@ -1,23 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import TodoColumn from './components/TodoColumn'
+import TodoList from './components/TodoList'
+import TodoTypeColumn from './components/TodoTypeColumn'
 import styles from './App.module.css'
 import type { ITodoItem, TTodoColumns } from './types/todo'
-import { TRANSFORMED_TODO_LIST, TYPES } from './data/mockTodoList'
-import {
-  EMPTY_TODO_LIST,
-  moveTodoToMainColumn,
-  moveTodoToTypeColumn,
-} from './utils/todoColumns'
+import { AUTO_MOVE_DELAY_MS, EMPTY_TODO_LIST } from './constants/todo'
+import { RAW_TODO_LIST } from './data/rawTodoList'
+import { moveTodoToMainColumn, moveTodoToTypeColumn } from './utils/todoColumns'
+import { getTodoTypeList, transformTodoList } from './utils/todoList'
 
-const INITIAL_TODO_COLUMNS: TTodoColumns = {
-  main: TRANSFORMED_TODO_LIST,
-}
-
-const AUTO_MOVE_DELAY_MS = 5000
+const todoTypeList = getTodoTypeList(RAW_TODO_LIST)
 
 const App = () => {
-  const [todoColumns, setTodoColumns] =
-    useState<TTodoColumns>(INITIAL_TODO_COLUMNS)
+  const [todoColumns, setTodoColumns] = useState<TTodoColumns>(() => ({
+    main: transformTodoList(RAW_TODO_LIST),
+  }))
 
   const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>())
 
@@ -50,14 +46,12 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      <TodoColumn
-        ariaLabel="Main list"
-        todoList={todoColumns.main}
-        onClick={handleClickMainTodo}
-      />
+      <section aria-label="Main list">
+        <TodoList todoList={todoColumns.main} onClick={handleClickMainTodo} />
+      </section>
 
-      {TYPES.map((type) => (
-        <TodoColumn
+      {todoTypeList.map((type) => (
+        <TodoTypeColumn
           key={type}
           title={type}
           todoList={todoColumns[type] ?? EMPTY_TODO_LIST}

@@ -1,6 +1,5 @@
+import { EMPTY_TODO_LIST } from '../constants/todo'
 import type { ITodoItem, TTodoColumns } from '../types/todo'
-
-export const EMPTY_TODO_LIST: ITodoItem[] = []
 
 export const moveTodoToMainColumn = (
   columns: TTodoColumns,
