@@ -121,7 +121,7 @@ src/
 │   ├── TodoTypeColumn.tsx  # A titled column for one type
 │   └── TodoItemButton.tsx
 ├── constants/
-│   └── todo.ts          # Auto-move delay
+│   └── todo.ts
 ├── data/
 │   └── rawTodoList.ts   # Raw data (type and name only)
 ├── types/

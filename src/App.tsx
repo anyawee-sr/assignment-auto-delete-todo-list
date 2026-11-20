@@ -3,13 +3,9 @@ import TodoList from './components/TodoList'
 import TodoTypeColumn from './components/TodoTypeColumn'
 import styles from './App.module.css'
 import type { ITodoItem, TTodoColumns } from './types/todo'
-import { AUTO_MOVE_DELAY_MS } from './constants/todo'
+import { AUTO_MOVE_DELAY_MS, EMPTY_TODO_LIST } from './constants/todo'
 import { RAW_TODO_LIST } from './data/rawTodoList'
-import {
-  EMPTY_TODO_LIST,
-  moveTodoToMainColumn,
-  moveTodoToTypeColumn,
-} from './utils/todoColumns'
+import { moveTodoToMainColumn, moveTodoToTypeColumn } from './utils/todoColumns'
 import { getTodoTypeList, transformTodoList } from './utils/todoList'
 
 const todoTypeList = getTodoTypeList(RAW_TODO_LIST)
