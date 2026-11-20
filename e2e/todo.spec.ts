@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
 test('shows all todos in main list and empty type columns on load', async ({
   page,
 }) => {
-  const mainList = page.getByRole('region', { name: 'Main list' })
+  const mainList = page.getByRole('region', { name: 'Main list', exact: true })
 
   await expect(mainList.getByRole('button')).toHaveText([
     'Apple',
@@ -24,23 +24,32 @@ test('shows all todos in main list and empty type columns on load', async ({
     'Carrot',
   ])
   await expect(
-    page.getByRole('region', { name: 'Fruit' }).getByRole('button'),
+    page
+      .getByRole('region', { name: 'Fruit', exact: true })
+      .getByRole('button'),
   ).toHaveCount(0)
   await expect(
-    page.getByRole('region', { name: 'Vegetable' }).getByRole('button'),
+    page
+      .getByRole('region', { name: 'Vegetable', exact: true })
+      .getByRole('button'),
   ).toHaveCount(0)
 })
 
 test('moves Tomato to Vegetable and back to the end of main list after 5 seconds', async ({
   page,
 }) => {
-  const mainList = page.getByRole('region', { name: 'Main list' })
-  const vegetableList = page.getByRole('region', { name: 'Vegetable' })
+  const mainList = page.getByRole('region', { name: 'Main list', exact: true })
+  const vegetableList = page.getByRole('region', {
+    name: 'Vegetable',
+    exact: true,
+  })
 
-  await mainList.getByRole('button', { name: 'Tomato' }).click()
-  await expect(mainList.getByRole('button', { name: 'Tomato' })).toHaveCount(0)
+  await mainList.getByRole('button', { name: 'Tomato', exact: true }).click()
   await expect(
-    vegetableList.getByRole('button', { name: 'Tomato' }),
+    mainList.getByRole('button', { name: 'Tomato', exact: true }),
+  ).toHaveCount(0)
+  await expect(
+    vegetableList.getByRole('button', { name: 'Tomato', exact: true }),
   ).toBeVisible()
 
   await page.clock.runFor(5000)
@@ -52,21 +61,30 @@ test('moves Tomato to Vegetable and back to the end of main list after 5 seconds
 test('moves Tomato back immediately when clicked in Vegetable', async ({
   page,
 }) => {
-  const mainList = page.getByRole('region', { name: 'Main list' })
-  const vegetableList = page.getByRole('region', { name: 'Vegetable' })
+  const mainList = page.getByRole('region', { name: 'Main list', exact: true })
+  const vegetableList = page.getByRole('region', {
+    name: 'Vegetable',
+    exact: true,
+  })
 
-  await mainList.getByRole('button', { name: 'Tomato' }).click()
+  await mainList.getByRole('button', { name: 'Tomato', exact: true }).click()
 
-  await expect(mainList.getByRole('button', { name: 'Tomato' })).toHaveCount(0)
   await expect(
-    vegetableList.getByRole('button', { name: 'Tomato' }),
+    mainList.getByRole('button', { name: 'Tomato', exact: true }),
+  ).toHaveCount(0)
+  await expect(
+    vegetableList.getByRole('button', { name: 'Tomato', exact: true }),
   ).toBeVisible()
 
-  await vegetableList.getByRole('button', { name: 'Tomato' }).click()
+  await vegetableList
+    .getByRole('button', { name: 'Tomato', exact: true })
+    .click()
 
   await expect(mainList.getByRole('button').last()).toHaveText('Tomato')
 
   await page.clock.runFor(5000)
 
-  await expect(mainList.getByRole('button', { name: 'Tomato' })).toHaveCount(1)
+  await expect(
+    mainList.getByRole('button', { name: 'Tomato', exact: true }),
+  ).toHaveCount(1)
 })
