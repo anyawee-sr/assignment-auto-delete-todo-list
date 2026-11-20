@@ -22,6 +22,18 @@ const RAW_TODO_LIST: Omit<ITodoItem, 'id'>[] = [
     name: 'Tomato',
   },
   {
+    type: 'Fruit',
+    name: 'Orange',
+  },
+  {
+    type: 'Fruit',
+    name: 'Mango',
+  },
+  {
+    type: 'Fruit',
+    name: 'Pineapple',
+  },
+  {
     type: 'Vegetable',
     name: 'Cucumber',
   },
