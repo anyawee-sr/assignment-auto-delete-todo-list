@@ -14,6 +14,8 @@ https://github.com/user-attachments/assets/2063bc98-2689-49d1-abcf-3d9757fb84b3
 
 ## Assignment
 
+Source: [7-solutions/frontend-assignment: 1. Auto Delete Todo List](https://github.com/7-solutions/frontend-assignment#1-auto-delete-todo-list)
+
 Please make a todo list that:
 
 1. Has a list of clickable buttons.
