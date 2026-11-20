@@ -115,7 +115,8 @@ Alternative approaches (a single interval with timestamps, `useReducer`) are ope
 src/
 ├── App.tsx              # Column state and per-item timers
 ├── components/
-│   ├── TodoColumn.tsx   # A titled column or the main list
+│   ├── TodoList.tsx        # Renders a list of todo buttons
+│   ├── TodoTypeColumn.tsx  # A titled column for one type
 │   └── TodoItemButton.tsx
 ├── data/
 │   └── mockTodoList.ts  # Raw data, generated ids, derived types
