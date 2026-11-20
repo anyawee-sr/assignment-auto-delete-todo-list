@@ -92,13 +92,13 @@ Before the first e2e run, install the browser: `npx playwright install chromium`
 
 ## Editing the Data
 
-All items live in `RAW_TODO_LIST` in [`src/data/mockTodoList.ts`](src/data/mockTodoList.ts). Each item needs only `type` and `name`:
+All items live in `RAW_TODO_LIST` in [`src/data/rawTodoList.ts`](src/data/rawTodoList.ts). Each item needs only `type` and `name`:
 
 ```ts
 { type: 'Herb', name: 'Basil' }
 ```
 
-- `id` is generated automatically as `` `${type}-${name}` ``, so the same `type` + `name` pair must not appear twice (a unit test checks this).
+- `id` is generated automatically as `` `${type}-${name}` `` by `transformTodoList` in [`src/utils/todoList.ts`](src/utils/todoList.ts), so the same `type` + `name` pair must not appear twice (a unit test checks this).
 - Columns come from the `type` values in the data. Adding a new type, such as `'Herb'` above, adds a new column with no UI changes.
 - The e2e tests check the assignment's exact list on purpose. If you change the data, update the expected list in [`e2e/todo.spec.ts`](e2e/todo.spec.ts).
 
@@ -120,12 +120,15 @@ src/
 │   ├── TodoList.tsx        # Renders a list of todo buttons
 │   ├── TodoTypeColumn.tsx  # A titled column for one type
 │   └── TodoItemButton.tsx
+├── constants/
+│   └── todo.ts          # Auto-move delay
 ├── data/
-│   └── mockTodoList.ts  # Raw data, generated ids, derived types
+│   └── rawTodoList.ts   # Raw data (type and name only)
 ├── types/
 │   └── todo.ts
 └── utils/
-    └── todoColumns.ts   # Pure functions that move items between columns
+    ├── todoColumns.ts   # Pure functions that move items between columns
+    └── todoList.ts      # Pure functions that generate ids and derive types
 e2e/
 └── todo.spec.ts         # Playwright end-to-end tests
 ```
