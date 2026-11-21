@@ -1,4 +1,10 @@
 import { expect, test } from '@playwright/test'
+import { AUTO_MOVE_DELAY_MS } from '../src/constants/todo'
+import { RAW_TODO_LIST } from '../src/data/rawTodoList'
+
+// Todos are bundled with the app, so e2e reads the real data.
+// If they move to an API, mock the response with page.route() instead.
+const allTodoNames = RAW_TODO_LIST.map(({ name }) => name)
 
 test.beforeEach(async ({ page }) => {
   await page.clock.install()
@@ -10,19 +16,7 @@ test('shows all todos in main list and empty type columns on load', async ({
 }) => {
   const mainList = page.getByRole('region', { name: 'Main list', exact: true })
 
-  await expect(mainList.getByRole('button')).toHaveText([
-    'Apple',
-    'Broccoli',
-    'Mushroom',
-    'Banana',
-    'Tomato',
-    'Orange',
-    'Mango',
-    'Pineapple',
-    'Cucumber',
-    'Watermelon',
-    'Carrot',
-  ])
+  await expect(mainList.getByRole('button')).toHaveText(allTodoNames)
   await expect(
     page
       .getByRole('region', { name: 'Fruit', exact: true })
@@ -35,7 +29,7 @@ test('shows all todos in main list and empty type columns on load', async ({
   ).toHaveCount(0)
 })
 
-test('moves Tomato to Vegetable and back to the end of main list after 5 seconds', async ({
+test('moves Tomato to Vegetable and back to the end of main list after the auto-move delay', async ({
   page,
 }) => {
   const mainList = page.getByRole('region', { name: 'Main list', exact: true })
@@ -52,7 +46,7 @@ test('moves Tomato to Vegetable and back to the end of main list after 5 seconds
     vegetableList.getByRole('button', { name: 'Tomato', exact: true }),
   ).toBeVisible()
 
-  await page.clock.runFor(5000)
+  await page.clock.runFor(AUTO_MOVE_DELAY_MS)
 
   await expect(vegetableList.getByRole('button')).toHaveCount(0)
   await expect(mainList.getByRole('button').last()).toHaveText('Tomato')
@@ -82,7 +76,7 @@ test('moves Tomato back immediately when clicked in Vegetable', async ({
 
   await expect(mainList.getByRole('button').last()).toHaveText('Tomato')
 
-  await page.clock.runFor(5000)
+  await page.clock.runFor(AUTO_MOVE_DELAY_MS)
 
   await expect(
     mainList.getByRole('button', { name: 'Tomato', exact: true }),
